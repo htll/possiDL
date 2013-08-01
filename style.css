@@ -1,0 +1,80 @@
+body {
+	margin-left: 200px;
+	margin-bottom: 75px;
+	background: #122;
+	color: #aab;
+
+	font-family: Arial;
+}
+
+form, article {
+	width: 400px;
+}
+
+form {
+	text-align: right;
+}
+
+.file {
+	padding: 0 5px;
+}
+
+.file:nth-child(odd) {
+	background: #233;
+}
+
+a {
+	color: #fff;
+	text-decoration: none;
+}
+
+footer {
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding: 10px 200px;
+	background: #122;
+	border-top: 2px solid #233;
+	text-align: right;
+}
+
+#left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.error {
+	padding: 2px 10px;
+	margin-bottom: 4px;
+	background: rgba(255, 0, 0, 0.2);
+	border:	2px solid rgba(255, 0, 0, 0.3);
+	text-align: center;
+}
+
+a.button {
+	font-size: 13px;
+	padding: 0 5px;
+}
+
+input, a.button {
+	background: #122;
+	border: 2px solid #233;
+	color: #aab;
+}
+
+input[type="submit"], a.button {
+	width: 65px;
+}
+
+input[type="submit"]:active, a.button:active {
+	border: 2px solid #122;
+	background: #122!important;
+}
+
+input[type="submit"]:hover, a.button:hover {
+	background: #233;
+}
