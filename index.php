@@ -50,7 +50,7 @@
       $ffile = $path . $file;
       if ( preg_match( '/^\.($|[^.])/', $file ) )
           continue;
-      if ( $file == '..' ) { if ( preg_match( '/(.*\/)(.*\/)/', $path, $matches ) === 0 ) continue; ?>
+      if ( $file == '..' ) { if ( $path == '' || $path == '/' ) continue; ?>
       <div class="file"><a href="index.php?dir=<?php echo $matches[1] ?>">../</a><span class="right">(one level up)</span></div>
       <?php } else if ( !is_dir( FILE_DIR . $ffile ) ) {  ?>
       <div class="file"><?php echo $file ?> <span class="right"><a href="download.php?file=<?php echo $ffile ?>">view</a> | <a href="download.php?force&file=<?php echo $ffile ?>">download</a></span></div>
