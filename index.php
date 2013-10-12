@@ -7,7 +7,7 @@
   $db = new PDO('sqlite:possiDL.db');
     if ( !$db || $db == null ) die( "error opening database" );
 
-  if ( isset( $_SESSION['token'] ) && isset( $_SESSION[ 'userid' ] ) ) { 
+  if ( isset( $_SESSION['token'] ) && isset( $_SESSION[ 'userid' ] ) ) {
     $stmt = $db->query( "SELECT * FROM users WHERE id = '" . $_SESSION['userid'] . "'" );
     if ( $stmt != null ) {
       $user = $stmt->fetch(PDO::FETCH_OBJ);
@@ -20,16 +20,18 @@
     $error = "an admin needs to whitelist your account before you can download files";
   }
 
-  $path = FILE_DIR;
-  if ( isset( $_GET['dir'] ) && preg_match( '/' . str_replace( '/', '\/', FILE_DIR ) . '([^\.]*\/)*$/', $_GET['dir']) ) {
+  $path = '';
+  if ( isset( $_GET['dir'] ) && !preg_match( '/\.\./', $_GET['dir']) ) {
     $path = $_GET[ 'dir' ];
+    if ( !is_dir( FILE_DIR . $path ) )
+      $path = '';
   }
-  //$path .= '/';
 ?>
 <!DOCTYPE html>
 <html>
 <head>
   <title>possiDL</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
@@ -43,14 +45,14 @@
   <article>
   <?php
     if ( $error ) echo '<div class="error">' . $error . '</div>';
-    $dir = opendir( $path );
+    $dir = opendir( FILE_DIR . $path );
     while ( $file = readdir( $dir ) ) {
       $ffile = $path . $file;
       if ( preg_match( '/^\.($|[^.])/', $file ) )
           continue;
       if ( $file == '..' ) { if ( preg_match( '/(.*\/)(.*\/)/', $path, $matches ) === 0 ) continue; ?>
       <div class="file"><a href="index.php?dir=<?php echo $matches[1] ?>">../</a><span class="right">(one level up)</span></div>
-      <?php } else if ( !is_dir( $ffile ) ) {  ?>
+      <?php } else if ( !is_dir( FILE_DIR . $ffile ) ) {  ?>
       <div class="file"><?php echo $file ?> <span class="right"><a href="download.php?file=<?php echo $ffile ?>">view</a> | <a href="download.php?force&file=<?php echo $ffile ?>">download</a></span></div>
       <?php } else { ?>
       <div class="file"><a href="index.php?dir=<?php echo $ffile ?>/"><?php echo $file ?>/</a></div>
