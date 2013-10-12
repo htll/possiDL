@@ -98,7 +98,7 @@ if ( !function_exists( 'mime_content_type' ) ) {
             return $mimetype;
         }
         else {
-            return 'application/octet-stream';
+            return 'text/plain';
         }
     }
 }
