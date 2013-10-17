@@ -116,7 +116,16 @@ $mime = mime_content_type ( $filename );
 if ( isset( $_GET[ 'force' ] ) )
     $mime = "other/force-download";
 
-header( "Content-Type: " . $mime ); 
+header( "Content-Type: " . $mime );
+if ( isset( $_GET[ 'force' ] ) ) {
+	header( "Pragma: public" );
+	header( "Expires: 0" );
+	header( "Cache-Control: must-revalidate, post-check=0, pre-check=0");
+	header( "Cache-Control: private", false);
+	header( "Content-Disposition: attachment; filename=\"" . basename( $filename ) . "\";" );
+	header( "Content-Transfer-Encoding: binary" );
+	header( "Content-Length: " . filesize( $filename ) );
+}
 
 $buffer = "";
 while ( !feof( $file ) ) {
