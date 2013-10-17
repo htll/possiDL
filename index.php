@@ -45,17 +45,17 @@
   <article>
   <?php
     if ( $error ) echo '<div class="error">' . $error . '</div>';
-    $dir = opendir( FILE_DIR . $path );
-    while ( $file = readdir( $dir ) ) {
+    $dir = opendir( FILE_DIR . $path . '/' );
+    while ( $file = readdir( $dir  ) ) {
       $ffile = $path . $file;
       if ( preg_match( '/^\.($|[^.])/', $file ) )
           continue;
       if ( $file == '..' ) { if ( $path == '' || $path == '/' ) continue; ?>
-      <div class="file"><a href="index.php?dir=<?php echo $matches[1] ?>">../</a><span class="right">(one level up)</span></div>
+      <div class="file"><a href="index.php?dir=<?php echo dirname( $ffile ); ?>">../</a><span class="right">(one level up)</span></div>
       <?php } else if ( !is_dir( FILE_DIR . $ffile ) ) {  ?>
-      <div class="file"><?php echo $file ?> <span class="right"><a href="download.php?file=<?php echo $ffile ?>">view</a> | <a href="download.php?force&file=<?php echo $ffile ?>">download</a></span></div>
+      <div class="file"><?php echo $file ?> <span class="right"><span class="downloads">&bigtriangledown;<?php echo "142" ?></span> | <a href="download.php?file=<?php echo $ffile ?>">view</a> | <a href="download.php?force&file=<?php echo $ffile ?>">download</a></span></div>
       <?php } else { ?>
-      <div class="file"><a href="index.php?dir=<?php echo $ffile ?>/"><?php echo $file ?>/</a></div>
+      <div class="file"><a href="index.php?dir=<?php echo $ffile ?>"><?php echo $file ?>/</a></div>
       <?php }
     }
   ?>
